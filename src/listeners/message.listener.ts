@@ -1,6 +1,9 @@
 import { Client } from "discord.js";
 import { IBot, IBotListener } from "../domains";
-import { BotMessage } from "../message";
+import { BotMessage } from "../bot-message";
+import { Logger } from "../utils";
+
+const logger = new Logger();
 
 export default class MessageListener implements IBotListener {
 
@@ -8,22 +11,17 @@ export default class MessageListener implements IBotListener {
     client.on("message", async (message) => {
 
       if (message.author.bot) return;
-      if (message.content.indexOf(bot.config.prefix) !== 0) return;
+      if (message.content.indexOf(bot.config.cmdPrefix) !== 0) return;
 
-      bot.logger.debug(`[${message.author.tag}] ${message.cleanContent}`);
+      logger.info(`[${message.author.tag}] ${message.cleanContent}`);
 
       for (const cmd of bot.commands) {
         try {
           if (cmd.isValid(message)) {
 
             const answer = new BotMessage(message.author);
-            if (!bot.config.idiots || !bot.config.idiots.indexOf(message.author.id)) {
-              await cmd.process(message, answer);
-            } else {
-              if (bot.config.idiotAnswer) {
-                answer.setTextOnly(bot.config.idiotAnswer);
-              }
-            }
+
+            await cmd.process(message, answer);
 
             if (answer.isValid()) {
               message.reply(answer.text || { embed: answer.richText });
@@ -33,7 +31,7 @@ export default class MessageListener implements IBotListener {
           }
         } catch (ex) {
 
-          bot.logger.error(ex);
+          logger.error(ex);
           return;
         }
       }

@@ -1,20 +1,23 @@
 import { Client } from "discord.js";
 import { IBotListener, IBot } from "../domains";
+import { Logger } from "../utils";
+
+const logger = new Logger();
 
 export default class ReadyListener implements IBotListener {
 
   public init(bot: IBot, client: Client) {
     client.on("ready", () => {
 
-      if (bot.config.game) {
-        client.user.setActivity(bot.config.game);
+      if (bot.config.botActivity) {
+        client.user.setActivity(bot.config.botActivity);
       }
-      if (bot.config.username && client.user.username !== bot.config.username) {
-        client.user.setUsername(bot.config.username);
+      if (bot.config.botUsername && client.user.username !== bot.config.botUsername) {
+        client.user.setUsername(bot.config.botUsername);
       }
 
       client.user.setStatus("online");
-      bot.logger.info("bot started...");
+      logger.info("\nDiscord Bot Started...\n");
     });
   }
 }

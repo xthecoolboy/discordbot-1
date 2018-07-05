@@ -1,22 +1,24 @@
 import { Client } from "discord.js";
 import { IBotListener, IBot } from "../domains";
-import { isEmpty, existsIn } from "../utils";
+import { isEmpty, existsIn, Logger } from "../utils";
+
+const logger = new Logger();
 
 export default class GuildCreateListener implements IBotListener {
 
   public init(bot: IBot, client: Client) {
     client.on("guildCreate", (guild) => {
 
-      bot.logger.info(`New guild joined ${guild.name} (id: ${guild.id}).`);
+      logger.info(`New guild joined ${guild.name} (id: ${guild.id}).`);
 
-      if (!isEmpty(bot.config.allowed_guilds)) {
-        if (existsIn(guild.id, bot.config.allowed_guilds)) {
+      if (!isEmpty(bot.config.allowedGuilds)) {
+        if (existsIn(guild.id, bot.config.allowedGuilds)) {
           guild.leave()
             .then(() => {
-              bot.logger.info("Guild not allowed, I have left.");
+              logger.info("Guild not allowed, I have left.");
             })
             .catch(rejected => {
-              bot.logger.info("Guild not allowed, but I was unable to leave :: ", rejected);
+              logger.info("Guild not allowed, but I was unable to leave :: ", rejected);
             });
         }
       }
