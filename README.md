@@ -14,6 +14,7 @@ This is a generic [Discord](https://discordapp.com) bot, a starting point for an
   - This allows us to store our private keys in a location thats safe and easy to access. It can also serve as a properties file for other variables that we want to use accross the application. 
   
   - For this project, we use three in particular.
+  
     KEY | Description
     ----|------
     TOKEN | This is the value of your Discord bot token.
