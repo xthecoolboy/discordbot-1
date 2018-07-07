@@ -19,7 +19,7 @@ This is a generic [Discord](https://discordapp.com) bot, a starting point for an
     ----|------
     TOKEN | This is the value of your Discord bot token.
     PREFIX | The symbol you want to use for bot commands. (Default if not provide is a `/` )
-    ALLOWED_GUILDS | This is a `|` (bar) delimited list that is optional but can be used if you want to restrict the bot to specific Discord Servers.
+    ALLOWED_GUILDS | This is a `\|` (bar) delimited list that is optional but can be used if you want to restrict the bot to specific Discord Servers.
 
 - Package Manager ( I suggest [Yarn](https://yarnpkg.com/en/) )
 
