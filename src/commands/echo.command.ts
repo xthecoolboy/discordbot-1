@@ -21,6 +21,8 @@ export default class PingCommand extends BotCommand {
   helpDesc: string = `Ping will tell you how the API is responding.\n`;
 
   public async process(msg: Message, answer: IBotMessage): Promise<void> {
-    answer.setTextOnly(msg.content);
+    const args = msg.cleanContent.slice(this.prefix.length).trim().split(/ +/g);
+    const echo = args.shift().toLowerCase();
+    answer.setTextOnly(echo);
   }
 }
