@@ -9,7 +9,7 @@ import { IBotMessage, IBot } from "../domains";
  * @apiGroup Commands
  * @apiVersion 0.1.0
  */
-export default class PingCommand extends BotCommand {
+export default class EchoCommand extends BotCommand {
 
   prefix: string = super.prefix;
   bot: IBot = super.bot;
@@ -18,11 +18,11 @@ export default class PingCommand extends BotCommand {
     "echo", "say"
   ];
 
-  helpDesc: string = `Ping will tell you how the API is responding.\n`;
+  helpDesc: string = `This repeats what you said.\n`;
 
   public async process(msg: Message, answer: IBotMessage): Promise<void> {
     const args = msg.cleanContent.slice(this.prefix.length).trim().split(/ +/g);
-    const echo = args.shift().toLowerCase();
-    answer.setTextOnly(echo);
+    args.shift();
+    answer.setTextOnly(args.join(" "));
   }
 }
