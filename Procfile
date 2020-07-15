@@ -1,2 +1,2 @@
-# worker: npm start
-# web: npm start
+worker: node ./dist/bin/index.js
+web: npm start
